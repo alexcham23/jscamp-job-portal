@@ -13,7 +13,8 @@
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router": "^8.5.1",
-    "react-router-dom": "^7.18.4"
+    "react-router-dom": "^7.18.4",
+    "snarkdown": "^2.0.0"
   },
   "devDependencies": {
     "@types/react": "^19.2.18",

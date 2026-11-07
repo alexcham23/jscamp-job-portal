@@ -1,4 +1,5 @@
-import Link from "./link";
+import { NavLink } from 'react-router';
+import Link from './link';
 
 const Header = () => {
   return (
@@ -21,7 +22,9 @@ const Header = () => {
         </h1>
       </Link>
       <nav>
-        <Link href="/search">Empleos</Link>
+        <NavLink
+          className={({ isActive }) => (isActive ? "nav-link-active" : "")} 
+        to="/search">Empleos</NavLink>
       </nav>
     </header>
   );

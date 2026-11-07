@@ -22,20 +22,21 @@ const Pagination = ({ currentPage = 1, totalPages = 10, onPageChange }) => {
 
   const handleChangePage = (e) => {
     e.preventDefault();
-    const page = parseInt(e.target.dataset.page, 10);
+    const page = parseInt(e.target.dataset.page);
     if (!isNaN(page) && page !== currentPage) {
       onPageChange(page);
     }
   }
 
   const buildPageUrl = (page) => {
-    const url = new URL(window.location.href);
+    const url = new URL(window.location);
     url.searchParams.set("page", page);
     return `${url.pathname}?${url.searchParams.toString()}`;
   };
 
   const stylePrevButton = isFirstPage ? {pointerEvents: "none", opacity: 0.5} : {};
   const styleNextButton = isLastPage ? {pointerEvents: "none", opacity: 0.5} : {};
+  
   return (
     <nav className={styles.pagination}>
       <a
@@ -64,7 +65,7 @@ const Pagination = ({ currentPage = 1, totalPages = 10, onPageChange }) => {
             key={page}
             data-page={page}
             href={buildPageUrl(page)}
-            className={page === currentPage ? styles.isActive : ""}
+            className={currentPage === page ? styles.isActive : ""}
             onClick={handleChangePage}
             >
                 {page}
