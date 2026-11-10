@@ -20,6 +20,35 @@
     color: var(--text-secondary);
 }
 
+.loading,
+.error {
+  padding-block: 5rem;
+  text-align: center;
+}
+
+.loadingText {
+  color: var(--text-muted);
+}
+
+.errorTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.errorButton {
+  color: #09f;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.errorButton:hover {
+  text-decoration: underline;
+}
+
 .breadcrumb{
     font-size: 0.875rem;
     color: var(--text-muted);
@@ -64,17 +93,24 @@
     color: var(--text-secondary);
 }
 
-.applyButton{
-    width: 100%;
-    background: #09f;
-    color: white;
-    border: none;
-    font-weight: 600;
-    padding: 0.75rem 2rem;
-    border-radius: 0.5rem;
-    margin-bottom: 3rem;
-    transition: background 0.3s;
-    cursor: pointer;
+.actionButtons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.applyButton {
+  width: 100%;
+  background: #09f;
+  color: white;
+  border: none;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0;
+  transition: background 0.2s;
+  cursor: pointer;
 }
 
 .applyButton:hover{
@@ -89,4 +125,37 @@
 
 .applyButton:disabled:hover {
     background: #666;
+}
+
+.favoriteButton {
+  display: flex;
+  margin: 0;
+  padding: 0.25rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.favoriteButton:hover,
+.favoriteButton:focus-visible {
+  background: transparent;
+  transform: scale(1.1);
+  outline: none;
+}
+
+.favoriteButton:focus {
+  background: transparent;
+  outline: none;
+}
+
+.favoriteButtonActive {
+  background: transparent;
+}
+
+@media (min-width: 640px) {
+  .applyButton {
+    width: auto;
+  }
 }

@@ -1,8 +1,8 @@
 import { createContext, use, useState } from 'react'
 
-export const AuthContext = createContext()
+const AuthContext = createContext()
 
-export function AuthProvider ({ children }) {
+const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const login = () => {
@@ -24,7 +24,7 @@ export function AuthProvider ({ children }) {
   </AuthContext>
 }
 
-export function useAuth() {
+const  useAuth = () => {
   const context = use(AuthContext)
 
   if (context === undefined) {
@@ -33,3 +33,5 @@ export function useAuth() {
 
   return context
 }
+
+export { AuthProvider, useAuth }

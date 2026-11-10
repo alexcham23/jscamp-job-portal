@@ -1,4 +1,4 @@
-import JobCard from "./card/jobCard";
+import JobCard from "./card/JobCard";
 
 const JobListings = ({jobs}) => {
     return (

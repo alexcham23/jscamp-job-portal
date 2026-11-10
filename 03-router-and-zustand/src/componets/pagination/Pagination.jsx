@@ -1,4 +1,4 @@
-import styles from "./pagination.module.css";
+import styles from "./Pagination.module.css";
 
 const Pagination = ({ currentPage = 1, totalPages = 10, onPageChange }) => {
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
