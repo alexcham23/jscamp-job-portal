@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import Link from './Link';
 import useAuthStore from '../store/authStore';
 import useFavoritesStore from '../store/favoritesStore';
@@ -46,17 +46,23 @@ const Header = () => {
 };
 
 const HeaderUserButton = () => {
-  const { isLoggedIn, login, logout } = useAuthStore();
+  const { isLoggedIn, logout } = useAuthStore();
   const {clearFavorites} = useFavoritesStore();
+  const navigate = useNavigate();
+  
   // Manejador de cierre de sesión
   const handleLoguot = () => {
     logout();
     clearFavorites();
   }
 
+  const handleLogin = () => {
+    navigate('/login');
+  }
+
   return isLoggedIn
     ? <button onClick={handleLoguot}>Cerrar sesión</button>
-    : <button onClick={login}>Iniciar sesión</button>
+    : <button onClick={handleLogin}>Iniciar sesión</button>
 }
 
 export default Header;
