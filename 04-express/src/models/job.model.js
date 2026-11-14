@@ -1,12 +1,14 @@
 import jobs from '../../jobs.json' with { type: 'json' };
 
 class JobModel {
-    static async getAll({ text, title, limit, technology, offset }) {
+    static async getAll({ text, title, level, limit=10, technology, offset = 0 }) {
         let filteredJobs = jobs;
 
         if (text) {
+            const searchTerm = text.toLowerCase();
             filteredJobs = filteredJobs.filter(job =>
-                job.titulo.toLowerCase().includes(text.toLowerCase()) || job.descripcion.toLowerCase().includes(text.toLowerCase()));
+                job.titulo.toLowerCase().includes(searchTerm) || 
+                job.descripcion.toLowerCase().includes(searchTerm));
         }
 
         if (technology) {
@@ -19,7 +21,10 @@ class JobModel {
 
         const paginatedJobs = filteredJobs.slice(offsetNumber, offsetNumber + limitNumber);
 
-        return paginatedJobs;
+        return {
+            result: paginatedJobs,
+            total: filteredJobs.length
+        };
     }
 
     static async getById(id) {

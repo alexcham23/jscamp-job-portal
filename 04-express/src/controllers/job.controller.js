@@ -4,16 +4,16 @@ import JobModel from '../models/job.model.js';
 class JobController {
 
     static async getAll(req, res) {
-        const { text, title, limit = DEFAULTS.LIMIT_PAGINATION, technology, offset = DEFAULTS.LIMIT_OFFSET } = req.query;
+        const { text, title,level ,limit = DEFAULTS.LIMIT_PAGINATION, technology, offset = DEFAULTS.LIMIT_OFFSET } = req.query;
         // Simulate an API call to fetch all jobs
-        const jobs = await JobModel.getAll({ text, title, limit, technology, offset });
+        const jobs = await JobModel.getAll({ text, title, level, limit, technology, offset });
 
         const limitNumber = Number(limit);
         const offsetNumber = Number(offset);
 
         // Return the jobs as a JSON response
 
-        res.status(200).json({ data: jobs, total: jobs.length, limit: limitNumber, offset: offsetNumber });
+        res.status(200).json({ result: jobs.result.length, limit: limitNumber, offset: offsetNumber, total: jobs.total , data: jobs.result });
     }
 
     static async getId(req, res) {

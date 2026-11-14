@@ -1,4 +1,4 @@
-import jobsRouter from './jobs.route.js';
+import jobsRouter from './job.route.js';
 
 const routers = {
     '/jobs': jobsRouter
