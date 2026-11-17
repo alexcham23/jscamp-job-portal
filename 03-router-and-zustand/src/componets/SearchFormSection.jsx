@@ -81,7 +81,7 @@ const SearchFormSection = ({ initialFilters, onTextFilter, onSearch, initialText
           
           <input
             ref={inputRef}
-            name={idText} id="empleos-search-input" type="text"
+            name={idText} id="empleos-search-input" type="text" role="searchbox"
             placeholder="Buscar trabajos, empresas o habilidades"
             onChange={handleTextChange}
             defaultValue={initialText}
