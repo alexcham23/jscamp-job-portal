@@ -1,44 +1,62 @@
 import { Request, Response } from 'express';
-import { DEFAULTS } from '../config.js';
+import type { JobFilters } from '../types.js';
 import JobModel from '../models/job.model.js';
 
 class JobController {
 
-    static async getAll(req: Request, res: Response) {
-        const { text, title,level ,limit = DEFAULTS.LIMIT_PAGINATION, technology, offset = DEFAULTS.LIMIT_OFFSET } = req.query;
-        // Simulate an API call to fetch all jobs
-        const jobs = await JobModel.getAll({ text, title, level, limit, technology, offset });
-
-        const limitNumber = Number(limit);
-        const offsetNumber = Number(offset);
-
-        // Return the jobs as a JSON response
-
-        res.status(200).json({ result: jobs.result.length, limit: limitNumber, offset: offsetNumber, total: jobs.total , data: jobs.result });
+    // GET /jobs - Listar todos los jobs
+    static async getAll(req: Request<{}, {}, JobFilters>, res: Response): Promise<void> {
+        const { tech, modality, level } = req.query;
+        const jobs = await JobModel.getAll({ tech, modality, level });
+        res.status(200).json(jobs);
     }
 
-    static async getId(req: Request, res: Response) {
-        const { id } = req.params
-
-        const job = await JobModel.getById(id)
+    // GET /jobs/:id - Obtener un job por su ID
+    static async getId(req: Request<{ id: string }>, res: Response): Promise<void> {
+        const { id } = req.params;
+        const job = await JobModel.getById(id);
 
         if (!job) {
-            return res.status(404).json({ error: 'Job not found' })
+            res.status(404).json({ message: 'Job not found' });
+            return;
         }
 
-        return res.json(job)
+        res.json(job);
     }
 
-    static async create(req: Request, res: Response) {
-        const { titulo, empresa, ubicacion, data } = req.body
-        const newJob = await JobModel.create({ titulo, empresa, ubicacion, data })
-
-        return res.status(201).json(newJob)
+    // POST /jobs - Crear un nuevo job
+    // El middleware validateCreate se encarga de validar los datos antes de llegar a este controlador
+    static async create(req: Request, res: Response): Promise<void> {
+        const NewJob = await JobModel.create(req.body);
+        res.status(201).json(NewJob);
     }
 
-    static async update(req: Request, res: Response) { }
-    static async partialUpdate(req: Request, res: Response) { }
-    static async delete(req: Request, res: Response) { }
+    // PATCH /jobs/:id - Actualizar un job existente parcialmente
+    // El middleware validateUpdate se encarga de validar los datos antes de llegar a este controlador              
+    static async update(req: Request<{ id: string }>, res: Response): Promise<void>  {
+        const { id } = req.params;
+        const updatedJob = await JobModel.update(id, req.body);
+
+        if (!updatedJob) {
+            res.status(404).json({ message: 'Job not found' });
+            return;
+        }
+
+        res.json(updatedJob);
+    }
+    
+    // DELETE /jobs/:id - Eliminar un job
+    static async delete(req: Request<{id: string}>, res: Response) : Promise<void> { 
+        const { id } = req.params;
+        const deletedJob = await JobModel.delete(id);
+
+        if (!deletedJob) {
+            res.status(404).json({ message: 'Job not found' });
+            return;
+        }
+
+        res.status(204).send();
+    }
 }
 
 export default JobController;
