@@ -3,7 +3,7 @@ import JobController from '../controllers/job.controller.js';
 import { validateCreate, validateUpdate } from '../middlewares/validate.middleware.js'; 
 
 
-const router = Router();
+const router: Router = Router();
 
 router.get('/', JobController.getAll);
 router.get('/:id', JobController.getId);
